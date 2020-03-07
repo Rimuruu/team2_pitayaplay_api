@@ -1,57 +1,59 @@
 const gameList = [
-  ["Jeu 0","RPG"],
-  ["Jeu 1","FPS/RTS"],
-  ["Jeu 2","MMO"],
-  ["Jeu 3","RTS"],
-  ["Jeu 4","FPS/RTS"],
-  ["Jeu 5","FPS/RTS"],
-  ["Jeu 6","RTS"],
-  ["Jeu 7","RPG"],
-  ["Jeu 8","MMO"],
-  ["Jeu 9","MMO"],
-  ["Jeu 10","RTS"],
-  ["Jeu 11","FPS/RTS"]
-  
+  {id:0,title:"Titre",jeu : "Animal Crossing",category:"RPG",auteur:"auteur",date:new Date('December 17, 2000 03:24:00'),text:"test",note:10,image:"https://www.actugaming.net/wp-content/uploads/2016/09/Animal-Crossing-New-Leaf-900x450.jpg"},
+  {id:1,title:"Jeu 1",jeu : "Doom Eternal",category:"FPS",auteur:"auteur",date:new Date('December 17, 2000 03:24:00'),text:"test",note:10,image:"https://steamcdn-a.akamaihd.net/steam/apps/782330/capsule_616x353.jpg?t=1571753976"},
+  {id:2,title:"Jeu 2",jeu : "Animal Crossing",category:"MMO",auteur:"auteur",date:new Date('December 17, 2000 03:24:00'),text:"test",note:10,image:""},
+  {id:3,title:"Jeu 3",jeu : "Animal Crossing",category:"RTS",auteur:"auteur",date:new Date('December 17, 2000 03:24:00'),text:"test",note:10,image:""},
+  {id:4,title:"Jeu 4",jeu : "Animal Crossing",category:"FPS/RTS",auteur:"auteur",date:new Date('December 17, 2000 03:24:00'),text:"test",note:10,image:""},
+  {id:5,title:"Jeu 5",jeu : "Animal Crossing",category:"FPS/RTS",auteur:"auteur",date:new Date('December 17, 2000 03:24:00'),text:"test",note:10,image:""},
+  {id:6,title:"Jeu 6",jeu : "Animal Crossing",category:"RTS",auteur:"auteur",date:new Date('December 17, 2000 03:24:00'),text:"test",note:10,image:""},
+  {id:7,title:"Jeu 7",jeu : "Animal Crossing",category:"RPG",auteur:"auteur",date:new Date('December 17, 2000 03:24:00'),text:"test",note:10,image:""},
+  {id:8,title:"Jeu 8",jeu : "Animal Crossing",category:"MMO",auteur:"auteur",date:new Date('December 17, 2000 03:24:00'),text:"test",note:10,image:""},
+  {id:9,title:"Jeu 9",jeu : "Animal Crossing",category:"MMO",auteur:"auteur",date:new Date('December 17, 2000 03:24:00'),text:"test",note:10,image:""},
+  {id:10,title:"Jeu 10",jeu : "Animal Crossing",category:"RTS",auteur:"auteur",date:new Date('December 17, 2000 03:24:00'),text:"test",note:10,image:""},
+  {id:11,title:"Jeu 11",jeu : "Animal Crossing",category:"FPS",auteur:"auteur",date:new Date('December 17, 2000 03:24:00'),text:"test",note:10,image:""}
 ]
 
 const CommentList = [
-  [0,"Comment 1 jeu 0"],
-  [2,"Comment 1 jeu 2"],
-  [5,"Comment 1 jeu 5"],
-  [1,"Comment 1 jeu 1"],
-  [0,"Comment 2 jeu 0"]
+  {id:0,text:"Comment 1 jeu 0",email:"a@b.fr",username:"pseudo"},
+  {id:2,text:"Comment 1 jeu 2",email:"",username:""},
+  {id:5,text:"Comment 1 jeu 5",email:"",username:""},
+  {id:1,text:"Comment 1 jeu 1",email:"",username:""},
+  {id:0,text:"Comment 2 jeu 0",email:"",username:""}
 ]
 
 const CategoryList = [
-  "RPG",
-  "FPS/RTS",
-  "MMO",
-  "RTS"
+  {category:"RPG",id:0},
+  {category:"FPS",id:1},
+  {category:"MMO",id:2},
+  {category:"RTS",id:3}
 ]
 
 export function getGame(req, res) {
   const id = req.params.id
-  console.log(`Get Game `),
-  res.send(gameList[id][0])
+  console.log(`Get Game `);
+  for(let i = 0; i < gameList.length; i++){
+    if(id == gameList[i].id) res.send(gameList[id]);
+  }
+  
+  
 }
 
 export function putGame(req, res) {
-  //const id = req.params.id || null
-  const name = req.body.name || "Random"
-  const type = req.body.type || "RPG"
-  const maxGroceryList = gameList.length;
 
-  /*if(id && id < maxGroceryList) {
-    console.log(`update value ${gameList[id]} as ${name}`)
-    gameList[id][0] = name;
-    gameList[id][1] = type;
-    res.send(gameList);
-    return;
-  }*/
-
-  gameList.push([name,type]);
+  const name = req.body.jeu || "Random"
+  const category = req.body.category || "RPG"
+  const titre = req.body.titre;
+  const image = req.body.image;
+  const auteur = req.body.auteur;
+  const id = gameList.length;
+  const text = req.body.text;
+  const note = req.body.note;
+  const jeu = req.body.jeu;
+  const date = Date.now();
+  const game = {id:id,title:titre,jeu : jeu,category:category,auteur:auteur,date:date,text:text,note:note,image:image}
+  gameList.push(game);
   console.log(`Put Game`),
-  res.send(gameList)
+  res.send("Test ajouté")
 }
 
 export function getListGame(req, res) {
@@ -66,7 +68,7 @@ export function getComment(req,res){
   CommentList.forEach(Comment);
 
   function Comment(item,index, arr){
-    if(CommentList[index][0] == id){
+    if(CommentList[index].id== id){
       tab_resul.push(CommentList[index])
     }
   }  
@@ -77,24 +79,10 @@ export function getComment(req,res){
 
 export function putComment(req,res){
   const tab_resul = [];
-  const id = req.params.id;
-  const comment = req.body.comment;
-
- /* CommentList.push([id,comment]);
-
-  CommentList.forEach(Comment);
-
-  function Comment(item,index, arr){
-    if(CommentList[index][0] == id){
-      tab_resul.push(CommentList[index][1])
-    }
-  }  
-
-  res.send(tab_resul);
-  console.log(`Put Comment`);*/
-
-  CommentList.push([id,comment]);
-  res.send(CommentList[CommentList.length-1][1]);
+  const idComment = req.params.id;
+  const comment = {id:idComment,text:req.body.comment,email:req.body.email,username:req.body.username} 
+  CommentList.push(comment);
+  res.send(CommentList[CommentList.length-1]);
   console.log(`Put Comment`);
 
 }
@@ -123,13 +111,18 @@ export function deleteComment(req,res){
 }
 
 export function getCategory(req,res){
-  const id = req.params.id
-  const tab_resul = [] 
+  const id = req.params.id;
+  const tab_resul = [];
+  var category=""; 
+  for(let i = 0; i<CategoryList.length;i++){
+      if(CategoryList[i].id == id) category = CategoryList[i].category;
+  }
+
 
   gameList.forEach(CategoryGame);
 
   function CategoryGame(item,index, arr){
-    if(gameList[index][1] == CategoryList[id]){
+    if(gameList[index].category== category){
       tab_resul.push(gameList[index])
     }
   }  

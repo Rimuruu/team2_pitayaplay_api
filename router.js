@@ -6,11 +6,11 @@ const routes = (app) => {
 
   app.route('/game')
       .get(getListGame)
-      .put(putGame)
+      .post(putGame)
 
   app.route('/game/:id/comment')
       .get(getComment)
-      .put(putComment)
+      .post(putComment)
 
   app.route('/game/:id/comment/:idc')
       .delete(deleteComment)
