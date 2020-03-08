@@ -4,7 +4,7 @@ import cors from 'cors'
 import routes from './router.js'
 
 const app = express();
-const PORT = 3000;
+const PORT = 3001;
 
 app.use(cors())
 app.use(bodyParser.urlencoded({ extended: true }))
@@ -12,7 +12,6 @@ app.use(bodyParser.json());
 
 app.get('/', (req, res) => {
   const mx = req.params;
-  console.log(mx);
   res.send("Hello world");
 });
 
