@@ -29,19 +29,16 @@ const CategoryList = [
 ]
 
 export function getGame(req, res) {
-  const id = req.params.id
-  console.log(`Get Game `);
+  const id = req.params.id;
   for(let i = 0; i < gameList.length; i++){
     if(id == gameList[i].id) res.send(gameList[id]);
-  }
-  
-  
+  }  
 }
 
 export function putGame(req, res) {
 
-  const name = req.body.jeu || "Random"
-  const category = req.body.category || "RPG"
+  const name = req.body.jeu || "Random";
+  const category = req.body.category || "RPG";
   const titre = req.body.titre;
   const image = req.body.image;
   const auteur = req.body.auteur;
@@ -50,15 +47,13 @@ export function putGame(req, res) {
   const note = req.body.note;
   const jeu = req.body.jeu;
   const date = Date.now();
-  const game = {id:id,title:titre,jeu : jeu,category:category,auteur:auteur,date:date,text:text,note:note,image:image}
+  const game = {id:id,title:titre,jeu : jeu,category:category,auteur:auteur,date:date,text:text,note:note,image:image};
   gameList.push(game);
-  console.log(`Put Game`),
-  res.send("Test ajouté")
+  res.send("Test ajouté");
 }
 
 export function getListGame(req, res) {
-  console.log(`Get List Game`),
-  res.send(gameList)
+  res.send(gameList);
 }
 
 export function getComment(req,res){
@@ -72,19 +67,14 @@ export function getComment(req,res){
       tab_resul.push(CommentList[index])
     }
   }  
-
-  console.log(`Get Comment`),
   res.send(tab_resul);
 }
 
 export function putComment(req,res){
-  const tab_resul = [];
   const idComment = req.params.id;
   const comment = {id:idComment,text:req.body.comment,email:req.body.email,username:req.body.username} 
   CommentList.push(comment);
   res.send(CommentList[CommentList.length-1]);
-  console.log(`Put Comment`);
-
 }
 
 export function deleteComment(req,res){
@@ -107,7 +97,6 @@ export function deleteComment(req,res){
   if(count < idc){
     res.send("Pas de Comment !");  
   }  
-  console.log(`Delete Comment`);
 }
 
 export function getCategory(req,res){
@@ -123,14 +112,12 @@ export function getCategory(req,res){
 
   function CategoryGame(item,index, arr){
     if(gameList[index].category== category){
-      tab_resul.push(gameList[index])
+      tab_resul.push(gameList[index]);
     }
   }  
   res.send(tab_resul);
-  console.log(`Get Category`)
 }
 
 export function getListCategory(req,res){
   res.send(CategoryList);
-  console.log(`Get ListCategory`)
 }
